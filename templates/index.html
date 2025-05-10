@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aufgabenverwaltung</title>
+</head>
+<body>
+    <h1>Aufgaben</h1>
+    <ul id="aufgaben-liste">
+        {{ range . }}
+        <li>
+            <input type="checkbox" {{ if .Erledigt }} checked {{ end }} onchange="window.location.href='/aufgabe-erledigt/{{ .ID }}'">
+            <strong {{ if .Erledigt }} style="text-decoration: line-through;" {{ end }}>{{ .Titel }}</strong>: {{ .Beschreibung }} (Erstellt am: {{ .ErstelltAm }})
+            <a href="/aufgabe-loeschen/{{ .ID }}">Löschen</a>
+        </li>
+        {{ else }}
+        <li>Keine Aufgaben vorhanden.</li>
+        {{ end }}
+    </ul>
+
+    <h2>Neue Aufgabe hinzufügen</h2>
+    <form action="/neue-aufgabe" method="post">
+        <div>
+            <label for="titel">Titel:</label>
+            <input type="text" id="titel" name="titel" required>
+        </div>
+        <div>
+            <label for="beschreibung">Beschreibung:</label>
+            <textarea id="beschreibung" name="beschreibung"></textarea>
+        </div>
+        <button type="submit">Hinzufügen</button>
+    </form>
+</body>
+</html>
